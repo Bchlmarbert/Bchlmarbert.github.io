@@ -1,44 +1,70 @@
-<html>
-  <head>
-    <style>
-      body {
-        background-image: url('https://cdn.discordapp.com/attachments/899695493435772960/1054474135931211826/image.png');
-        background-size: cover;
-        text-align: center;
-      }
-      .text {
-        font-family: 'Comic Sans MS';
-        font-size: 36px;
-      }
-      .paragraph {
-        display: flex;
-        align-items: center;
-      }
-      img {
-        height: 200px;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="paragraph">
-      <img src="https://cdn.discordapp.com/attachments/899695493435772960/1054474135931211826/image.png" alt="image">
-<audio ref='drizzerd_watch_weird_582' src="https://raw.githubusercontent.com/Bchlmarbert/Bchlmarbert.github.io/drizzerd_watch_weird_592.mp3" autoPlay loop></audio>
-      <img src="https://cdn.discordapp.com/attachments/899695493435772960/1054474135931211826/image.png" alt="image">
-      <span class="text">Watching the movie "weird" will expand your horizons and broaden your understanding of the world.</span>
-    </div>
-    <br>
-    <div class="paragraph">
-      <img src="https://cdn.discordapp.com/attachments/899695493435772960/1054474135931211826/image.png" alt="image">
-      <img src="https://cdn.discordapp.com/attachments/899695493435772960/1054474135931211826/image.png" alt="image">
-      <span class="text">It will challenge your beliefs and stimulate critical thinking.</span>
-    </div>
-    <br>
-    <div class="paragraph">
-      <img src="https://cdn.discordapp.com/attachments/899695493435772960/1054474135931211826/image.png" alt="image">
-      <img src="https://cdn.discordapp.com/attachments/899695493435772960/1054474135931211826/image.png" alt="image">
-      <span class="text">It will provide a unique and memorable viewing experience.</span>
-    </div>
-    <br>
-    DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD  DRIZ WATCH WEIRD 
-  </body>
-</html>
+<canvas id="gameCanvas" width="1920" height="1080"></canvas>
+
+<style>
+  /* Set up the canvas */
+  canvas {
+    background-color: #000;
+    border: none;
+    width: 100%;
+    height: 100%;
+  }
+</style>
+
+<audio id="bgm" src="https://dl.dropboxusercontent.com/s/rcfqgm3p5avvo09/UHF.mp3?dl=1" autoplay loop></audio>
+
+<script>
+  // Get the canvas element
+  var canvas = document.getElementById('gameCanvas');
+  var ctx = canvas.getContext('2d');
+
+  // Load the image
+  var image = new Image();
+  image.src = 'https://cdn.discordapp.com/attachments/814298548006813739/1061356223158562826/attachment.png';
+
+  // Set up the image's starting position
+  var imageX = 100;
+  var imageY = 100;
+
+  // Set the image's speed (pixels per frame)
+  var imageSpeedX = 5;
+  var imageSpeedY = 5;
+
+  // Set up the tints to cycle through
+  var tints = ['#f00', '#f80', '#ff0', '#8f0', '#0f0', '#0f8', '#00f', '#80f', '#f0f', '#f08'];
+  var tintIndex = 0;
+
+  // Set up the game loop
+  function loop() {
+    // Update the image's position
+    imageX += imageSpeedX;
+    imageY += imageSpeedY;
+
+    // Check for image-wall collisions
+    if (imageX < 0 || imageX + image.width > canvas.width) {
+      imageSpeedX = -imageSpeedX;
+      tintIndex = (tintIndex + 1) % tints.length;
+    }
+    if (imageY < 0 || imageY + image.height > canvas.height) {
+      imageSpeedY = -imageSpeedY;
+      tintIndex = (tintIndex + 1) % tints.length;
+    }
+
+    // Clear the canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Draw the image
+    ctx.drawImage(image, imageX, imageY);
+
+    // Set the image's tint
+    ctx.globalCompositeOperation = 'multiply';
+    ctx.fillStyle = tints[tintIndex];
+    ctx.fillRect(imageX, imageY, image.width, image.height);
+    ctx.globalCompositeOperation = 'source-over';
+
+    // Request another frame
+    requestAnimationFrame(loop);
+  }
+
+  // Start the game loop
+  loop();
+</script>
